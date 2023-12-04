@@ -13,7 +13,7 @@ fetch( "/api/v1/hello" )
   .then(({ message }) => {
     serverHello.value = message
   });
-// change main.js to main.ts//
+
 </script>
 
 <template>
