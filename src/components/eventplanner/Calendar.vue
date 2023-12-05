@@ -2,7 +2,6 @@
   import { Calendar, DatePicker } from 'v-calendar';
   import 'v-calendar/style.css';
   
-  console.log("denna kommer från komponenten")
   
   export default {
     components: {
