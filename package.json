@@ -18,7 +18,8 @@
     "express": "^4.18.2",
     "leaflet-geosearch": "^3.11.0",
     "v-calendar": "^3.1.2",
-    "vue": "^3.3.8",
+    "vue": "^3.3.10",
+    "vue-mapbox-gl": "^0.0.1",
     "vue2-leaflet-geosearch": "^1.0.6"
   },
   "devDependencies": {
