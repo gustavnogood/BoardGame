@@ -1,13 +1,11 @@
-
-import { createApp } from 'vue';
-import App from './App.vue';
-import { setupCalendar } from 'v-calendar';
-import "leaflet/dist/leaflet.css";
-import "leaflet-geosearch/dist/geosearch.css";
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCAWm7Xv3C5ZApabF4AtqjyB3uvLr0PuRg",
   authDomain: "boardgame-60717.firebaseapp.com",
@@ -19,10 +17,5 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-// @ts-ignore
 const app = initializeApp(firebaseConfig);
-// @ts-ignore
 const analytics = getAnalytics(app);
-
-createApp(App).use(setupCalendar, {}).mount('#app');
-
