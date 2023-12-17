@@ -26,3 +26,9 @@ model Game {
   @@map("games")
 }
 
+model Date {
+  id            Int    @id @default(autoincrement())
+  date          String
+  @@map("dates")
+}
+
