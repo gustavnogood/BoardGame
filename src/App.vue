@@ -15,6 +15,9 @@
     <div id="create-event">
       <CreateEvent />
     </div>
+    <div id="user-attending">
+      <UserAttending />
+    </div>
   </div>
 </template>
 
@@ -24,6 +27,7 @@ import Calendar from './components/eventplanner/Calendar.vue';
 import BoardGameList from './components/eventplanner/BoardGameList.vue';
 import Attending from './components/eventplanner/Attending.vue';
 import CreateEvent from './components/eventplanner/CreateEvent.vue';
+import UserAttending from './components/eventplanner/UserAttending.vue';
 </script>
 
 <style scoped>
