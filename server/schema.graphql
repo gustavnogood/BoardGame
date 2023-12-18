@@ -1,0 +1,27 @@
+type User {
+  id: Int
+  name: String
+  image: String
+}
+
+type Game {
+  id: Int
+  name: String
+  category: String
+  numberOfPlayers: Int
+  time: String
+}
+
+type Date {
+  id: Int
+  date: String
+}
+
+type Query {
+  users: [User]
+  games: [Game]
+}
+
+type Mutation {
+  saveDateToPostgres(date: String): Date
+}

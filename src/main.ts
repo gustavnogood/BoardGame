@@ -1,4 +1,3 @@
-
 import { createApp } from 'vue';
 import App from './App.vue';
 import { setupCalendar } from 'v-calendar';
@@ -6,7 +5,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/dist/geosearch.css";
 import EventPlanner from './components/eventplanner/EventPlanner.vue';
-import EventPage from './components/eventpage/EventPage.vue'
+import EventPage from './components/eventpage/EventPage.vue';
+import { ApolloClient, InMemoryCache } from '@apollo/client/core';
+import { DefaultApolloClient } from '@vue/apollo-composable';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -17,5 +18,12 @@ const router = createRouter({
   ],
 });
 
+const apolloClient = new ApolloClient({
+  uri: '/graphql', // Set your GraphQL server endpoint
+  cache: new InMemoryCache(),
+});
 
-createApp(App).use(router).use(setupCalendar, {}).mount('#app');
+const app = createApp(App);
+
+// Provide the Apollo Client using the DefaultApolloClient key
+app.use(router).use(setupCalendar, {}).provide(DefaultApolloClient, apolloClient).mount('#app');

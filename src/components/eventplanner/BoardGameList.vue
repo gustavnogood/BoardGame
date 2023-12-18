@@ -21,10 +21,24 @@
 
 <script lang="ts">
 import { ref, computed, onUpdated, PropType } from 'vue';
+import { useQuery } from '@vue/apollo-composable';
+import { GET_GAMES } from '../../../server/queries';
 
 interface BoardGame {
   id: number;
   name: string;
+}
+
+interface BoardGameData {
+  games: BoardGame[]; // Assuming 'games' is the property returned by your GraphQL query
+}
+
+interface Game {
+  id: number;
+  name: string;
+  category: string;
+  numberOfPlayers: number;
+  time: string;
 }
 
 export default {
@@ -35,10 +49,15 @@ export default {
     },
   },
   setup(props) {
-    const games = ref<BoardGame[]>([
-      { id: 1, name: 'Game 1' },
-      { id: 2, name: 'Game 2' },
-    ]);
+    const { loading, error, data } = useQuery<BoardGameData>(GET_GAMES);
+
+    const games = ref<Game[]>([]);
+
+    if (data && 'games' in data.value) {
+    games.value = data.value.games;
+    }
+
+    console.log('Data:', data);
 
     const searchQuery = ref('');
 
@@ -49,16 +68,16 @@ export default {
       );
     });
 
-    const selectedGames = ref<BoardGame[]>([]);
+    const selectedGames = ref<Game[]>([]);
 
-    const addGame = (game: BoardGame) => {
+    const addGame = (game: Game) => {
       if (!selectedGames.value.some((selectedGame) => selectedGame.id === game.id)) {
         selectedGames.value.push(game);
         props.updateSelectedGames(selectedGames.value);
       }
     };
 
-    const removeGame = (game: BoardGame) => {
+    const removeGame = (game: Game) => {
       selectedGames.value = selectedGames.value.filter(
         (selectedGame) => selectedGame.id !== game.id
       );
@@ -75,6 +94,8 @@ export default {
       selectedGames,
       addGame,
       removeGame,
+      loading,
+      error,
     };
   },
 };

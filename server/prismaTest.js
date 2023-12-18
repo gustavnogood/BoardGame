@@ -5,13 +5,16 @@ export async function runPrismaTest() {
 
   try {
     await prisma.$connect();
-    const newUser = await prisma.user.create({
+    const newGame = await prisma.game.create({
       data: {
-        name: 'Alice',
-        image: 'https://cdn.iconscout.com/icon/free/png-512/free-profile-1439375-1214445.png?f=webp&w=256',
+        name: 'Pandemic',
+        category:  'Cooperative',
+        numberOfPlayers: 4,
+        time: '60min',
+        
       },
     });
-    console.log(newUser);
+    console.log(newGame);
   } catch (error) {
     throw error;
   } finally {
