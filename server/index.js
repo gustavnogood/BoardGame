@@ -9,17 +9,13 @@ const distPath = path.join(path.resolve(), "dist");
 
 const app = express();
 
-app.get("/api/v1/hello", (_req, res) => {
-  res.json({ message: "Hello, world!" });
-});
-
 if (process.env.NODE_ENV === "production") {
-      app.use("/", express.static(distPath));
-    } else {
-      app.use("/", express.static(publicPath));
-      app.use("/src", assetsRouter);
-    }
-    
+  app.use("/", express.static(distPath));
+} else {
+  app.use("/", express.static(publicPath));
+  app.use("/src", assetsRouter);
+}
+
 app.use(homepageRouter);
 
 app.listen(port, () => {
