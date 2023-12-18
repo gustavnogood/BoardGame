@@ -2,14 +2,13 @@ import express from "express";
 import fs from "fs/promises";
 import path from "path";
 
-
 const router = express.Router();
 
 const environment = process.env.NODE_ENV;
 
 router.get("/*", async (_req, res) => {
   const data = {
-   environment,
+    environment,
     manifest: await parseManifest(),
   };
 

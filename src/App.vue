@@ -1,22 +1,24 @@
 <template>
   <div>
-    <div id="calendar">
-      <Calendar />
-    </div>
-    <div id="friend-list">
-      <FriendList />
-    </div>
-    <div id="board-game-list">
-      <BoardGameList />
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
-import FriendList from './components//eventplanner/FriendList.vue';
-import Calendar from './components/eventplanner/Calendar.vue';
-import BoardGameList from './components/eventplanner/BoardGameList.vue';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute();
+const router = useRouter();
+
+onMounted(() => {
+  // Redirect to the event page by default
+  if (route.path === '/') {
+    router.push('/events');
+  }
+});
 </script>
 
 <style scoped>
+/* Add your scoped styles here */
 </style>

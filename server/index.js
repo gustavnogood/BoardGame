@@ -6,21 +6,16 @@ import assetsRouter from './assetsRouter.js';
 const port = process.env.PORT || 3000;
 const publicPath = path.join(path.resolve(), 'public');
 const distPath = path.join(path.resolve(), 'dist');
-
+app.use(express.json());
 const app = express();
 
-app.use(express.json());
 
-app.get('/api/v1/hello', (_req, res) => {
-  res.json({ message: 'Hello, world!' });
-});
-
-if (process.env.NODE_ENV === 'production') {
-  app.use('/', express.static(distPath));
+if (process.env.NODE_ENV === "production") {
+  app.use("/", express.static(distPath));
 } else {
-  app.use('/', express.static(publicPath));
-  app.use('/src', assetsRouter);
-};
+  app.use("/", express.static(publicPath));
+  app.use("/src", assetsRouter);
+}
 
 app.post('/api/v1/saveDateToPostgres', async (req, res) => {
   try {
@@ -48,6 +43,7 @@ app.post('/api/v1/saveDateToPostgres', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 app.use(homepageRouter);
 
