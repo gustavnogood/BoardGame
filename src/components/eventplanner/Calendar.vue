@@ -1,40 +1,37 @@
-<script lang="ts">
-  import { Calendar, DatePicker } from 'v-calendar';
-  import 'v-calendar/style.css';
-  import { getFirestore, addDoc, collection, serverTimestamp } from 'firebase/firestore';
-  
-  
-  export default {
-  components: {
-    Calendar,
-    DatePicker,
-  },
-  data() {
-    return {
-      date: new Date(),
-    };
-  },
-  methods: {
-    async saveDateToFirestore() {
-      try {
-        const db = getFirestore();
-        const datesCollection = collection(db, 'dates'); // Replace 'dates' with your Firestore collection name
+<template>
+  <div>
+    <DatePicker v-model="date" />
+    <button @click="saveDateToPostgres()">Add Date</button>
+  </div>
+</template>
 
-        await addDoc(datesCollection, {
-          selectedDate: this.date,
-          timestamp: serverTimestamp(),
-        });
+<script setup lang="ts">
+import { ref } from 'vue';
+import { DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
 
-        console.log('Date saved to Firestore');
-      } catch (error) {
-        console.error('Error saving date to Firestore', error);
-      }
-    },
-  },
+const date = ref(new Date());
+
+const saveDateToPostgres = async () => {
+  try {
+    const response = await fetch('/api/v1/saveDateToPostgres', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        date: date.value.toISOString(),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save date to PostgreSQL');
+    }
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.error('Error saving date to PostgreSQL', error);
+  }
 };
 </script>
-
-<template>
-    <DatePicker v-model="date"/>
-    <button @click="saveDateToFirestore()">Add Date</button>
-</template>
