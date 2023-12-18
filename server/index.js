@@ -6,7 +6,7 @@ import assetsRouter from './assetsRouter.js';
 const port = process.env.PORT || 3000;
 const publicPath = path.join(path.resolve(), 'public');
 const distPath = path.join(path.resolve(), 'dist');
-app.use(express.json());
+
 const app = express();
 
 
@@ -17,6 +17,7 @@ if (process.env.NODE_ENV === "production") {
   app.use("/src", assetsRouter);
 }
 
+app.use(express.json());
 app.post('/api/v1/saveDateToPostgres', async (req, res) => {
   try {
     // Extract the date from the request body
