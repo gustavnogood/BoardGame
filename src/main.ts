@@ -1,3 +1,4 @@
+
 import { createApp } from 'vue';
 import App from './App.vue';
 import { setupCalendar } from 'v-calendar';
@@ -15,5 +16,6 @@ const router = createRouter({
     { path: '/events', component: EventPage },
   ],
 });
+
 
 createApp(App).use(router).use(setupCalendar, {}).mount('#app');
