@@ -44,7 +44,7 @@ interface Game {
 export default {
   props: {
     updateSelectedGames: {
-      type: Function as PropType<(games: BoardGame[]) => void>,
+      type: Function as PropType<(games: Game[]) => void>,
       required: true,
     },
   },
