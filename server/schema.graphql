@@ -17,6 +17,13 @@ type Date {
   date: String
 }
 
+input CreateGameInput {
+  name: String!
+  category: String!
+  numberOfPlayers: Int!
+  time: String!
+}
+
 type Query {
   users: [User]
   games: [Game]
@@ -24,4 +31,5 @@ type Query {
 
 type Mutation {
   saveDateToPostgres(date: String): Date
+  createGame(input: CreateGameInput!): Game
 }

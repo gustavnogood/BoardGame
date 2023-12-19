@@ -19,20 +19,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, computed, onUpdated, PropType } from 'vue';
-import { useQuery } from '@vue/apollo-composable';
-import { GET_GAMES } from '../../../server/queries';
 
-interface BoardGame {
-  id: number;
-  name: string;
-}
+<script setup lang="ts">
+import { ref, computed, onUpdated } from 'vue';
+import { useQuery, useMutation } from '@vue/apollo-composable';
+import { GET_GAMES, CREATE_GAME } from '../../../server/queries';
 
-interface BoardGameData {
-  games: Game[]; // Assuming 'games' is the property returned by your GraphQL query
-}
-
+// Type annotations
 interface Game {
   id: number;
   name: string;
@@ -41,65 +34,55 @@ interface Game {
   time: string;
 }
 
-export default {
-  props: {
-    updateSelectedGames: {
-      type: Function as PropType<(games: Game[]) => void>,
-      required: true,
-    },
-  },
-  setup(props) {
-    const { loading, error, data } = useQuery <BoardGameData>(GET_GAMES);
+const { loading, error, data } = useQuery(GET_GAMES);
+const games = ref<Game[]>([]); // Provide the type for games
 
-    const games = ref<Game[]>([]);
+if (data && 'games' in data.value) {
+  games.value = data.value.games as Game[]; // Cast the value to Game[]
+}
 
-    if (data && 'games' in data.value) {
-    games.value = data.value.games;
+const searchQuery = ref('');
+
+const filteredGames = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return games.value.filter((game) =>
+    game.name.toLowerCase().includes(query)
+  );
+});
+
+const selectedGames = ref<Game[]>([]); // Provide the type for selectedGames
+
+const { mutate: createGame } = useMutation(CREATE_GAME);
+
+const addGame = async (game: Game) => {
+  try {
+    const result = await createGame({
+      input: {
+        name: game.name,
+        category: game.category,
+        numberOfPlayers: game.numberOfPlayers,
+        time: game.time,
+      },
+    });
+
+    // Check if result.data exists before accessing properties
+    if (result && result.data && result.data.createGame) {
+      selectedGames.value.push(result.data.createGame as Game);
+    } else {
+      console.error('Error adding new game: Invalid result data');
     }
-
-    console.log('Data:', data);
-    console.log('Error:', error);
-    console.log('Loading:', loading);
-
-    const searchQuery = ref('');
-
-    const filteredGames = computed(() => {
-      const query = searchQuery.value.toLowerCase();
-      return games.value.filter((game) =>
-        game.name.toLowerCase().includes(query)
-      );
-    });
-
-    const selectedGames = ref<Game[]>([]);
-
-    const addGame = (game: Game) => {
-      if (!selectedGames.value.some((selectedGame) => selectedGame.id === game.id)) {
-        selectedGames.value.push(game);
-        props.updateSelectedGames(selectedGames.value);
-      }
-    };
-
-    const removeGame = (game: Game) => {
-      selectedGames.value = selectedGames.value.filter(
-        (selectedGame) => selectedGame.id !== game.id
-      );
-      props.updateSelectedGames(selectedGames.value);
-    };
-
-    onUpdated(() => {
-      console.log('BoardGameList.vue updated - selectedGames:', selectedGames.value);
-    });
-
-    return {
-      searchQuery,
-      filteredGames,
-      selectedGames,
-      addGame,
-      removeGame,
-      loading,
-      error,
-      data,
-    };
-  },
+  } catch (error) {
+    console.error('Error adding new game:', error);
+  }
 };
+
+const removeGame = (game: Game) => { // Provide the type for game
+  selectedGames.value = selectedGames.value.filter(
+    (selectedGame) => selectedGame.id !== game.id
+  );
+};
+
+onUpdated(() => {
+  console.log('BoardGameList.vue updated - selectedGames:', selectedGames.value);
+});
 </script>

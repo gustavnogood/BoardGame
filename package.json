@@ -10,13 +10,15 @@
     "dev": "concurrently 'npm:dev:frontend' 'npm:dev:backend'",
     "start": "set NODE_ENV=production && node server/index.js",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:deploy": "npx prisma migrate deploy"
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
     "@graphql-tools/schema": "^10.0.2",
     "@popperjs/core": "^2.11.8",
-    "@prisma/client": "^5.7.0",
+    "@prisma/client": "^5.7.1",
     "@vue/apollo-composable": "^4.0.0-beta.12",
     "apollo-server-express": "^3.13.0",
     "ejs": "^3.1.9",
@@ -41,7 +43,7 @@
     "concurrently": "^8.2.2",
     "leaflet": "^1.9.4",
     "nodemon": "^3.0.1",
-    "prisma": "^5.7.0",
+    "prisma": "^5.7.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
     "vue-browser-geolocation": "^1.8.0",
