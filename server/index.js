@@ -10,6 +10,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import cors from 'cors';
 
 
+
 const publicPath = path.join(path.resolve(), 'public');
 const distPath = path.join(path.resolve(), 'dist');
 

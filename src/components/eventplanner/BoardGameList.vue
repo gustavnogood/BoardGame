@@ -24,10 +24,7 @@ import { ref, computed, onUpdated, PropType } from 'vue';
 import { useQuery } from '@vue/apollo-composable';
 import { GET_GAMES } from '../../../server/queries';
 
-interface BoardGame {
-  id: number;
-  name: string;
-}
+
 
 interface BoardGameData {
   games: Game[]; // Assuming 'games' is the property returned by your GraphQL query
