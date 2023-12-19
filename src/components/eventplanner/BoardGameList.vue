@@ -30,7 +30,7 @@ interface BoardGame {
 }
 
 interface BoardGameData {
-  games: BoardGame[]; // Assuming 'games' is the property returned by your GraphQL query
+  games: Game[]; // Assuming 'games' is the property returned by your GraphQL query
 }
 
 interface Game {
@@ -49,7 +49,7 @@ export default {
     },
   },
   setup(props) {
-    const { loading, error, data } = useQuery<BoardGameData>(GET_GAMES);
+    const { loading, error, data } = useQuery <BoardGameData>(GET_GAMES);
 
     const games = ref<Game[]>([]);
 
@@ -58,6 +58,8 @@ export default {
     }
 
     console.log('Data:', data);
+    console.log('Error:', error);
+    console.log('Loading:', loading);
 
     const searchQuery = ref('');
 
@@ -96,6 +98,7 @@ export default {
       removeGame,
       loading,
       error,
+      data,
     };
   },
 };
