@@ -1,40 +1,64 @@
 <template>
-    <div>
-      <h2>Friend List</h2>
-      <input v-model="searchQuery" placeholder="Search friends..." />
-      <ul>
-        <li v-for="friend in filteredFriends" :key="friend.id">
-          {{ friend.name }}
-          <button @click="inviteFriend(friend)">Invite</button>
-        </li>
-      </ul>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-import { ref, computed } from 'vue';
+  <div>
+    <h2>Friend List</h2>
+    <ul v-if="loading">Loading...</ul>
+    <ul v-else>
+      <li v-for="friend in friends" :key="friend.id">
+        {{ friend.name }}
+        <button @click="inviteFriend(friend)">Invite</button>
+      </li>
+    </ul>
+    <h3>Invited Friends</h3>
+    <ul>
+      <li v-for="invitedFriend in invitedFriends" :key="invitedFriend.id">
+        {{ invitedFriend.name }}
+        <button @click="uninviteFriend(invitedFriend)">Uninvite</button>
+      </li>
+    </ul>
+  </div>
+</template>
 
+<script setup lang="ts">
+import { ref, onMounted, nextTick, onUpdated } from 'vue';
+import { useQuery } from '@vue/apollo-composable';
+import { GET_USERS } from '../../../server/queries';
 
 interface Friend {
   id: number;
   name: string;
 }
-  
-  const friends = ref([
-    { id: 1, name: 'Friend 1' },
-    { id: 2, name: 'Friend 2' },
-  ]);
-  
-  const searchQuery = ref('');
-  
-  const filteredFriends = computed(() => {
-    const query = searchQuery.value.toLowerCase();
-    return friends.value.filter((friend) =>
-      friend.name.toLowerCase().includes(query)
-    );
-  });
-  
-  const inviteFriend = (friend: Friend) => {
-    console.log(`Inviting ${friend.name} to the event`);
-  };
-  </script>
+
+const friends = ref<Friend[]>([]);
+const invitedFriends = ref<Friend[]>([]);
+
+const { loading, onResult } = useQuery(GET_USERS);
+
+onMounted(async () => {
+  await nextTick();
+  console.log('Component mounted - friends:', friends.value.map(friend => ({ ...friend })));
+});
+
+onUpdated(async () => {
+  await nextTick();
+  console.log('FriendList.vue updated - friends:', friends.value.map(friend => ({ ...friend })));
+});
+
+onResult((result) => {
+  if (!result.loading && result.data) {
+    friends.value = result.data.users;
+    console.log('Fetched friends:', friends.value.map(friend => ({ ...friend })));
+  } else if (!result.loading && result.error) {
+    console.error('Error fetching data:', result.error);
+  }
+});
+
+const inviteFriend = (friend: Friend) => {
+  if (!invitedFriends.value.some(invitedFriend => invitedFriend.id === friend.id)) {
+    invitedFriends.value.push(friend);
+  }
+};
+
+const uninviteFriend = (friend: Friend) => {
+  invitedFriends.value = invitedFriends.value.filter(invitedFriend => invitedFriend.id !== friend.id);
+};
+</script>

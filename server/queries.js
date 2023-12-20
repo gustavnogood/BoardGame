@@ -1,3 +1,5 @@
+// queries.js
+
 import { gql } from 'graphql-tag';
 
 export const GET_GAMES = gql`
@@ -29,7 +31,15 @@ export const GET_USERS = gql`
     users {
       id
       name
-      image
+    }
+  }
+`;
+
+export const CREATE_USER = gql`
+  mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
+      name
     }
   }
 `;

@@ -1,14 +1,13 @@
 <template>
   <div>
     <h2>Board Game List</h2>
-    <input v-model="searchQuery" placeholder="Search board games..." />
-    <ul>
-      <li v-for="game in filteredGames" :key="game.id">
+    <ul v-if="loading">Loading...</ul>
+    <ul v-else>
+      <li v-for="game in games" :key="game.id">
         {{ game.name }}
-        <button @click="addGame(game)">Add</button>
+        <button @click="addGameFromList(game)">Add</button>
       </li>
     </ul>
-
     <h3>Selected Games</h3>
     <ul>
       <li v-for="selectedGame in selectedGames" :key="selectedGame.id">
@@ -19,13 +18,11 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { ref, computed, onUpdated } from 'vue';
-import { useQuery, useMutation } from '@vue/apollo-composable';
-import { GET_GAMES, CREATE_GAME } from '../../../server/queries';
+import { ref, onMounted, nextTick, onUpdated } from 'vue';
+import { useQuery } from '@vue/apollo-composable';
+import { GET_GAMES } from '../../../server/queries';
 
-// Type annotations
 interface Game {
   id: number;
   name: string;
@@ -34,55 +31,41 @@ interface Game {
   time: string;
 }
 
-const { loading, error, data } = useQuery(GET_GAMES);
-const games = ref<Game[]>([]); // Provide the type for games
+const games = ref<Game[]>([]);
+const selectedGames = ref<Game[]>([]);
 
-if (data && 'games' in data.value) {
-  games.value = data.value.games as Game[]; // Cast the value to Game[]
-}
+const { loading, onResult } = useQuery(GET_GAMES);
 
-const searchQuery = ref('');
-
-const filteredGames = computed(() => {
-  const query = searchQuery.value.toLowerCase();
-  return games.value.filter((game) =>
-    game.name.toLowerCase().includes(query)
-  );
+onMounted(async () => {
+  await nextTick();
+  console.log('Component mounted - games:', games.value.map(game => ({ ...game })));
 });
 
-const selectedGames = ref<Game[]>([]); // Provide the type for selectedGames
+onUpdated(async () => {
+  await nextTick();
+  console.log('BoardGameList.vue updated - games:', games.value.map(game => ({ ...game })));
+});
 
-const { mutate: createGame } = useMutation(CREATE_GAME);
+onResult((result) => {
+  if (!result.loading && result.data) {
+    games.value = result.data.games;
+    console.log('Fetched games:', games.value.map(game => ({ ...game })));
+  } else if (!result.loading && result.error) {
+    console.error('Error fetching data:', result.error);
+  }
+});
 
-const addGame = async (game: Game) => {
-  try {
-    const result = await createGame({
-      input: {
-        name: game.name,
-        category: game.category,
-        numberOfPlayers: game.numberOfPlayers,
-        time: game.time,
-      },
-    });
-
-    // Check if result.data exists before accessing properties
-    if (result && result.data && result.data.createGame) {
-      selectedGames.value.push(result.data.createGame as Game);
-    } else {
-      console.error('Error adding new game: Invalid result data');
-    }
-  } catch (error) {
-    console.error('Error adding new game:', error);
+const addGameFromList = (game: Game) => {
+  if (!selectedGames.value.some(selectedGame => selectedGame.id === game.id)) {
+    selectedGames.value.push(game);
   }
 };
 
-const removeGame = (game: Game) => { // Provide the type for game
-  selectedGames.value = selectedGames.value.filter(
-    (selectedGame) => selectedGame.id !== game.id
-  );
+const removeGame = (game: Game) => {
+  selectedGames.value = selectedGames.value.filter(selectedGame => selectedGame.id !== game.id);
 };
 
-onUpdated(() => {
-  console.log('BoardGameList.vue updated - selectedGames:', selectedGames.value);
-});
+
+
+
 </script>

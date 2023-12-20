@@ -1,3 +1,5 @@
+// resolvers.js
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -35,6 +37,20 @@ const resolvers = {
       // Return the list of all games after creating the new one
       const updatedGamesList = await prisma.game.findMany();
       return updatedGamesList;
+    },
+    createUser: async (_, { input }) => {
+      const { name } = input;
+
+      // Use Prisma to create a new user record in the database
+      const newUser = await prisma.user.create({
+        data: {
+          name,
+        },
+      });
+
+      // Return the list of all users after creating the new one
+      const updatedUsersList = await prisma.user.findMany();
+      return updatedUsersList;
     },
   },
 };

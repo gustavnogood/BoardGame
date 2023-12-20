@@ -33,7 +33,8 @@
     "vue-apollo": "^3.1.1",
     "vue-mapbox-gl": "^0.0.1",
     "vue-router": "^4.2.5",
-    "vue2-leaflet-geosearch": "^1.0.6"
+    "vue2-leaflet-geosearch": "^1.0.6",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.8",

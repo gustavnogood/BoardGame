@@ -6,9 +6,7 @@ import { ApolloServer } from 'apollo-server-express';
 import resolvers from './resolvers.js';
 import { readFileSync } from 'fs';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-//import { runPrismaTest } from './prismaTest.js';
 import cors from 'cors';
-
 
 const publicPath = path.join(path.resolve(), 'public');
 const distPath = path.join(path.resolve(), 'dist');
@@ -42,6 +40,13 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Log when the server receives a request
+  app.use((req, res, next) => {
+    console.log(`Request received: ${req.method} ${req.url}`);
+    next();
+  });
+
+  // Log when the server receives a POST request to '/api/v1/saveDateToPostgres'
   app.post('/api/v1/saveDateToPostgres', async (req, res) => {
     try { // Extract the date from the request body
       const { date } = req.body;
@@ -71,15 +76,18 @@ async function startServer() {
 
   app.use(homepageRouter);
 
+  // Log when Apollo Server middleware is applied
   server.applyMiddleware({ app });
+  console.log('Apollo Server middleware applied to Express app');
 
   const port = process.env.PORT || 3000;
+
+  // Log when the server is started
   app.listen(port, () => {
-    console.log('Server listening on port', port);
+    console.log(`Server listening on port ${port}`);
+    console.log(`GraphQL Playground: http://localhost:${port}${server.graphqlPath}`);
   });
 }
-
-//runPrismaTest();
 
 startServer().catch((error) => {
   console.error('Error starting server:', error);

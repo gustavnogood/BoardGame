@@ -19,7 +19,7 @@ const router = createRouter({
 });
 
 const apolloClient = new ApolloClient({
-  uri: '/graphql', // Set your GraphQL server endpoint
+  uri: 'http://localhost:3000/graphql', // Set your GraphQL server endpoint
   cache: new InMemoryCache(),
 });
 

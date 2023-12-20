@@ -17,3 +17,9 @@ model Game {
   time            String
   @@map("games")
 }
+
+model User {
+  id              Int    @id @default(autoincrement())
+  name            String
+  @@map("users")
+}
