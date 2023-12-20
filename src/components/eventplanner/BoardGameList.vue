@@ -22,6 +22,7 @@
 import { ref, onMounted, nextTick, onUpdated } from 'vue';
 import { useQuery } from '@vue/apollo-composable';
 import { GET_GAMES } from '../../../server/queries';
+import { useStore } from 'vuex';
 
 interface Game {
   id: number;
@@ -30,9 +31,9 @@ interface Game {
   numberOfPlayers: number;
   time: string;
 }
-
+const store = useStore();
 const games = ref<Game[]>([]);
-const selectedGames = ref<Game[]>([]);
+const selectedGames = ref<Game[]>(store.getters.selectedGames);
 
 const { loading, onResult } = useQuery(GET_GAMES);
 
@@ -64,8 +65,4 @@ const addGameFromList = (game: Game) => {
 const removeGame = (game: Game) => {
   selectedGames.value = selectedGames.value.filter(selectedGame => selectedGame.id !== game.id);
 };
-
-
-
-
 </script>

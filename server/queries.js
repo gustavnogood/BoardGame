@@ -43,3 +43,41 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const CREATE_EVENT = gql`
+  mutation CreateEvent($input: CreateEventInput!) {
+    createEvent(input: $input) {
+      date
+      invitedFriends {
+        id
+        name
+      }
+      selectedGames {
+        id
+        name
+        category
+        numberOfPlayers
+        time
+      }
+    }
+  }
+`;
+
+export const GET_EVENTS = gql`
+  query GetEvents {
+    events {
+      date
+      invitedFriends {
+        id
+        name
+      }
+      selectedGames {
+        id
+        name
+        category
+        numberOfPlayers
+        time
+      }
+    }
+  }
+`;

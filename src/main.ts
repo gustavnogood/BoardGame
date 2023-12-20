@@ -8,7 +8,7 @@ import EventPlanner from './components/eventplanner/EventPlanner.vue';
 import EventPage from './components/eventpage/EventPage.vue';
 import { ApolloClient, InMemoryCache } from '@apollo/client/core';
 import { DefaultApolloClient } from '@vue/apollo-composable';
-import { useStore } from './store';
+import store from './store';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -27,10 +27,13 @@ const apolloClient = new ApolloClient({
 const app = createApp(App);
 
 // Provide the Apollo Client using the DefaultApolloClient key
-app.use(router).use(setupCalendar, {}).provide(DefaultApolloClient, apolloClient);
+app
+  .use(router)
+  .use(setupCalendar, {})
+  .provide(DefaultApolloClient, apolloClient)
+  .use(store);
 
-// Use the store
-const store = useStore();
-app.use(store);
-
-app.mount('#app');
+// Load events from localStorage after creating the store
+store.dispatch('loadEvents').then(() => {
+  app.mount('#app');
+});

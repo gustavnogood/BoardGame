@@ -22,14 +22,16 @@
 import { ref, onMounted, nextTick, onUpdated } from 'vue';
 import { useQuery } from '@vue/apollo-composable';
 import { GET_USERS } from '../../../server/queries';
+import { useStore } from 'vuex';
 
 interface Friend {
   id: number;
   name: string;
 }
 
+const store = useStore();
 const friends = ref<Friend[]>([]);
-const invitedFriends = ref<Friend[]>([]);
+const invitedFriends = ref<Friend[]>((store.getters.invitedFriends));
 
 const { loading, onResult } = useQuery(GET_USERS);
 
@@ -62,3 +64,4 @@ const uninviteFriend = (friend: Friend) => {
   invitedFriends.value = invitedFriends.value.filter(invitedFriend => invitedFriend.id !== friend.id);
 };
 </script>
+

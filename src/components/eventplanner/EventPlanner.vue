@@ -7,7 +7,6 @@
       <FriendList v-model="invitedFriends" />
     </div>
     <div id="board-game-list">
-      <!-- Pass updateSelectedGames prop to BoardGameList -->
       <BoardGameList :updateSelectedGames="updateSelectedGames" />
     </div>
     <button @click="createEvent">Create Event</button>
@@ -16,60 +15,56 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { ref, onMounted, toRefs, Ref, nextTick  } from 'vue';
 import FriendList from './FriendList.vue';
 import Calendar from './Calendar.vue';
 import BoardGameList from './BoardGameList.vue';
-import { useQuery } from '@vue/apollo-composable';
-import { GET_GAMES, GET_USERS } from '../../../server/queries';
-import { createEvent as mockCreateEvent, getAllEvents } from './mockApi';
 
+const store = useStore();
 const eventDate = ref(new Date());
-const invitedFriends = ref([]);
-const selectedGames = ref([]);
+const invitedFriends: Ref<{ id: number; name: string }[]> = ref([]);
+const selectedGames: Ref<{ id: number; name: string }[]> = ref([]);
 
-const { result: gamesResult } = useQuery(GET_GAMES);
-const { result: friendsResult } = useQuery(GET_USERS);
-
-onMounted(() => {
-  if (gamesResult.value) {
-    // Handle gamesResult.value.data.games
-  }
-
-  if (friendsResult.value) {
-    // Handle friendsResult.value.data.friends
-  }
-});
+// Load events from localStorage on component setup
+store.dispatch('loadEvents');
 
 const createEvent = () => {
-  console.log('Entering createEvent function');
-
   const eventData = {
     date: eventDate.value,
     invitedFriends: invitedFriends.value,
     selectedGames: selectedGames.value,
   };
 
-  console.log('Event data before creation:', eventData);
+  console.log('Event Data:', eventData);
 
-  mockCreateEvent(eventData);
-
-  // Refresh the events array after creating a new event
-  const events = getAllEvents();
-  console.log('Event data after creation:', events);
+  // Dispatch the createEvent action from the Vuex store
+  store.dispatch('createEvent', eventData);
 
   // Reset selected data
   eventDate.value = new Date();
   invitedFriends.value = [];
   selectedGames.value = [];
-
-  console.log('Exiting createEvent function');
 };
 
-// Function to update selectedGames
 const updateSelectedGames = (games) => {
   selectedGames.value = games;
 };
+
+// Watch for changes in the Vuex store events and update local state
+onMounted(() => {
+  const events = store.state.events;
+
+  // Update local state when events change in the store
+  if (events.length > 0) {
+    const latestEvent = events[events.length - 1];
+    const { invitedFriends: iFriends, selectedGames: sGames } = toRefs(latestEvent);
+
+    eventDate.value = new Date(latestEvent.date);
+    invitedFriends.value = iFriends.value;
+    selectedGames.value = sGames.value;
+  }
+});
 </script>
 
 <style scoped>
