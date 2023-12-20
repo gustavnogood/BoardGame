@@ -4,14 +4,16 @@
     <ul v-if="loading">Loading...</ul>
     <ul v-else>
       <li v-for="game in games" :key="game.id">
-        {{ game.name }}
+        {{ game.name }} - {{ game.category }} <br>
+        Number of Players: {{ game.numberOfPlayers }}
+        <br>
         <button @click="addGameFromList(game)">Add</button>
       </li>
     </ul>
     <h3>Selected Games</h3>
     <ul>
       <li v-for="selectedGame in selectedGames" :key="selectedGame.id">
-        {{ selectedGame.name }}
+        {{ selectedGame.name }} - {{ selectedGame.category }}
         <button @click="removeGame(selectedGame)">Remove</button>
       </li>
     </ul>
@@ -66,3 +68,7 @@ const removeGame = (game: Game) => {
   selectedGames.value = selectedGames.value.filter(selectedGame => selectedGame.id !== game.id);
 };
 </script>
+
+<style>
+ @import url('../../style.css');
+</style>

@@ -1,11 +1,11 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+ :root {
+  font-family: Arial, Helvetica, sans-serif, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #242323;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -65,6 +65,69 @@ button:focus-visible {
   text-align: center;
 }
 
+#createEvent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 252px;
+  height: 53px;
+}
+
+#event-planner {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#addGame {
+  background-color: #059614;
+  color: #ffffff;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+#calendar,
+#friend-list,
+#board-game-list,
+#createEvent {
+  margin: 10px;
+}
+
+#eventPage {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#addDate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  padding: 10px 20px;;
+  border: none;
+  cursor: pointer;
+}
+
+li {
+  list-style-type: none;
+  padding: 10px;
+}
+
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -76,4 +139,6 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+  
+  
 }

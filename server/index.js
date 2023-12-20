@@ -27,7 +27,7 @@ async function startServer() {
   const app = express();
 
   app.use(cors({
-    origin: 'http://localhost:5173',  // Update with your frontend URL
+    origin: 'http://localhost:5173',  
     credentials: true,
   }));
 
@@ -40,19 +40,18 @@ async function startServer() {
 
   app.use(express.json());
 
-  // Log when the server receives a request
+
   app.use((req, res, next) => {
     console.log(`Request received: ${req.method} ${req.url}`);
     next();
   });
 
-  // Log when the server receives a POST request to '/api/v1/saveDateToPostgres'
+
   app.post('/api/v1/saveDateToPostgres', async (req, res) => {
-    try { // Extract the date from the request body
+    try { 
       const { date } = req.body;
   
-      // Handle Prisma logic here
-      // Example: Save the date to the database using PrismaClient
+
       const { PrismaClient } = await import('@prisma/client');
       const prisma = new PrismaClient();
   
@@ -67,7 +66,7 @@ async function startServer() {
       await prisma.$disconnect();
   
       res.json({ message: 'Date saved to PostgreSQL', data: newDate });
-      // Your existing logic for saving date to PostgreSQL
+
     } catch (error) {
       console.error('Error saving date to PostgreSQL', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -76,13 +75,13 @@ async function startServer() {
 
   app.use(homepageRouter);
 
-  // Log when Apollo Server middleware is applied
+
   server.applyMiddleware({ app });
   console.log('Apollo Server middleware applied to Express app');
 
   const port = process.env.PORT || 3000;
 
-  // Log when the server is started
+
   app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
     console.log(`GraphQL Playground: http://localhost:${port}${server.graphqlPath}`);

@@ -35,3 +35,7 @@ const saveDateToPostgres = async () => {
   }
 };
 </script>
+
+<style>
+ @import url('../../style.css');
+</style>

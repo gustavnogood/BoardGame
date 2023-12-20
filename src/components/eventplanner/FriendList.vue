@@ -29,9 +29,10 @@ interface Friend {
   name: string;
 }
 
+
 const store = useStore();
-const friends = ref<Friend[]>([]);
-const invitedFriends = ref<Friend[]>((store.getters.invitedFriends));
+const friends = ref<Friend[]>(store.getters.allFriends);
+const invitedFriends = ref<Friend[]>(store.getters.invitedFriends);
 
 const { loading, onResult } = useQuery(GET_USERS);
 
@@ -57,11 +58,21 @@ onResult((result) => {
 const inviteFriend = (friend: Friend) => {
   if (!invitedFriends.value.some(invitedFriend => invitedFriend.id === friend.id)) {
     invitedFriends.value.push(friend);
+
+    localStorage.setItem('friends', JSON.stringify(invitedFriends.value));
   }
 };
 
 const uninviteFriend = (friend: Friend) => {
   invitedFriends.value = invitedFriends.value.filter(invitedFriend => invitedFriend.id !== friend.id);
+
+  localStorage.setItem('friends', JSON.stringify(invitedFriends.value));
 };
 </script>
+
+<style>
+ @import url('../../style.css');
+</style>
+
+
 

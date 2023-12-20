@@ -20,20 +20,20 @@ const router = createRouter({
 });
 
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:3000/graphql', // Set your GraphQL server endpoint
+  uri: 'http://localhost:3000/graphql', 
   cache: new InMemoryCache(),
 });
 
 const app = createApp(App);
 
-// Provide the Apollo Client using the DefaultApolloClient key
+
 app
   .use(router)
   .use(setupCalendar, {})
   .provide(DefaultApolloClient, apolloClient)
   .use(store);
 
-// Load events from localStorage after creating the store
-store.dispatch('loadEvents').then(() => {
+
+store.dispatch('initializeStore').then(() => {
   app.mount('#app');
 });
