@@ -1,17 +1,24 @@
 <template>
-  <div>
-    <div id="calendar">
-      <Calendar v-model="eventDate" />
+  <div id="event-planner">
+    <div class="row">
+      <div id="calendar">
+        <Calendar v-model="eventDate" />
+      </div>
+      <div id="friend-list">
+        <FriendList v-model="invitedFriends" />
+      </div>
     </div>
-    <div id="friend-list">
-      <FriendList v-model="invitedFriends" />
+    <div class="row">
+      <div id="board-game-list">
+        <BoardGameList :updateSelectedGames="updateSelectedGames" />
+      </div>
     </div>
-    <div id="board-game-list">
-      <!-- Pass updateSelectedGames prop to BoardGameList -->
-      <BoardGameList :updateSelectedGames="updateSelectedGames" />
+    <div class="row">
+      <button id="createEvent" @click="createEvent">Create Event</button>
     </div>
-    <button @click="createEvent">Create Event</button>
-    <router-link to="/events">Back to Events</router-link>
+    <div class="row">
+      <router-link to="/events">Back to Events</router-link>
+    </div>
   </div>
 </template>
 
@@ -73,5 +80,5 @@ const updateSelectedGames = (games) => {
 </script>
 
 <style scoped>
-/* Add your scoped styles here */
+ @import url('../../style.css');
 </style>

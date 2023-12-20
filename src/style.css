@@ -65,6 +65,64 @@ button:focus-visible {
   text-align: center;
 }
 
+#createEvent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 252px;
+  height: 53px;
+}
+
+#event-planner {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#addGame {
+  background-color: #059614;
+  color: #ffffff;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+#calendar,
+#friend-list,
+#board-game-list,
+#createEvent {
+  margin: 10px;
+}
+
+#eventPage {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#addDate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  padding: 10px 20px;;
+  border: none;
+  cursor: pointer;
+}
+
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -76,4 +134,6 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+  
+  
 }

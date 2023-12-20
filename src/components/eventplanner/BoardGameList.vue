@@ -5,14 +5,14 @@
     <ul v-else>
       <li v-for="game in games" :key="game.id">
         {{ game.name }}
-        <button @click="addGameFromList(game)">Add</button>
+        <button id="addGame" @click="addGameFromList(game)">Add</button>
       </li>
     </ul>
     <h3>Selected Games</h3>
     <ul>
       <li v-for="selectedGame in selectedGames" :key="selectedGame.id">
         {{ selectedGame.name }}
-        <button @click="removeGame(selectedGame)">Remove</button>
+        <button id="addGame" @click="removeGame(selectedGame)">Remove</button>
       </li>
     </ul>
   </div>
@@ -69,3 +69,5 @@ const removeGame = (game: Game) => {
 
 
 </script>
+<style scoped>
+</style>

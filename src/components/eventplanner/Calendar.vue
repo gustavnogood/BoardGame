@@ -1,7 +1,7 @@
 <template>
   <div>
     <DatePicker v-model="date" />
-    <button @click="saveDateToPostgres()">Add Date</button>
+    <button id="addDate" @click="saveDateToPostgres()">Add Date</button>
   </div>
 </template>
 
@@ -35,3 +35,7 @@ const saveDateToPostgres = async () => {
   }
 };
 </script>
+
+<style scoped>
+ @import url('../../style.css');
+</style>

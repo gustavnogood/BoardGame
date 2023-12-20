@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="eventPage">
     <h1>Event Page</h1>
 
     <!-- Display the latest event information -->
@@ -45,3 +45,6 @@ onMounted(() => {
   }
 });
 </script>
+<style scoped>
+ @import url('../../style.css');
+</style>
