@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="boardList">
     <DatePicker v-model="date" />
     <button id="addDate" @click="saveDateToPostgres()">Add Date</button>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div id="eventPage">
-    <h1>Event Page</h1>
+    <h1 id="eventHeader">Vuealizers Boardgame</h1>
 
     <!-- Display the latest event information -->
     <div v-if="latestEvent">
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Link to the event planner page -->
-    <router-link to="/event-planner">Create Event</router-link>
+    <router-link to="/event-planner" class="event-link">Create Event</router-link>
   </div>
 </template>
 

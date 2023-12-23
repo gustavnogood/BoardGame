@@ -85,11 +85,6 @@ button:focus-visible {
   min-height: 100vh;
 }
 
-#addGame {
-  background-color: #059614;
-  color: #ffffff;
-}
-
 .row {
   display: flex;
   justify-content: center;
@@ -108,19 +103,188 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background-image: url("src/assets/boardGame.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#eventHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 56px;
+
+  /* Font Border */
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  /* Font Shadow */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.date-picker {
+  width: 100%;
+  margin-bottom: 10px; 
+}
+
+.friend-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px #1a1a1a;
+  margin: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.friend-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  margin-left: 8px;
+  height: 20px;
+  width: 70px;
+  text-align: center;
+}
+
+#addGame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  margin-left: 8px;
+  height: 20px;
+  width: 50px;
+  text-align: center;
+}
+
+#boardList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #addDate {
+  width: 100%;
+  background-color: #059614;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+button {
+  background-color: #059614;
+  color: #ffffff;
+  margin-left: 8px;
+}
+
+.event-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background-color: #059614;
   color: #ffffff;
-  padding: 10px 20px;;
-  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  transition: background-color 0.25s, box-shadow 0.25s;
 }
 
+.event-link:hover {
+  background-color: #046b10; /* Adjust the hover background color */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Adjust the hover box-shadow */
+}
+
+#inviteFriend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  margin-left: 8px;
+  height: 20px;
+  width: 70px;
+  text-align: center;
+}
+
+#uninviteFriend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #b45252;
+  color: #ffffff;
+  margin-left: 8px;
+  height: 20px;
+  width: 70px;
+  text-align: center;
+}
+
+#addGame {  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #059614;
+  color: #ffffff;
+  margin-left: 8px;
+  height: 20px;
+  width: 60px;
+  text-align: center;
+}
+
+#removeGame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #b45252;
+  color: #ffffff;
+  margin-left: 8px;
+  height: 20px;
+  width: 60px;
+  text-align: center;
+}
 
 
 @media (prefers-color-scheme: light) {

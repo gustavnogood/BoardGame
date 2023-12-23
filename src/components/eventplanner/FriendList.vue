@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div id="friendsList">
     <h2>Friend List</h2>
     <ul v-if="loading">Loading...</ul>
     <ul v-else>
       <li v-for="friend in friends" :key="friend.id">
         {{ friend.name }}
-        <button @click="inviteFriend(friend)">Invite</button>
+        <button id="inviteFriend" @click="inviteFriend(friend)">Invite</button>
       </li>
     </ul>
     <h3>Invited Friends</h3>
     <ul>
       <li v-for="invitedFriend in invitedFriends" :key="invitedFriend.id">
         {{ invitedFriend.name }}
-        <button @click="uninviteFriend(invitedFriend)">Uninvite</button>
+        <button id="uninviteFriend" @click="uninviteFriend(invitedFriend)">Uninvite</button>
       </li>
     </ul>
   </div>
@@ -62,3 +62,6 @@ const uninviteFriend = (friend: Friend) => {
   invitedFriends.value = invitedFriends.value.filter(invitedFriend => invitedFriend.id !== friend.id);
 };
 </script>
+<style scoped>
+ @import url('../../style.css');
+</style>

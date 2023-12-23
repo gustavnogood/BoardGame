@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="gameList">
     <h2>Board Game List</h2>
     <ul v-if="loading">Loading...</ul>
     <ul v-else>
@@ -12,7 +12,7 @@
     <ul>
       <li v-for="selectedGame in selectedGames" :key="selectedGame.id">
         {{ selectedGame.name }}
-        <button id="addGame" @click="removeGame(selectedGame)">Remove</button>
+        <button id="removeGame" @click="removeGame(selectedGame)">Remove</button>
       </li>
     </ul>
   </div>
@@ -70,4 +70,5 @@ const removeGame = (game: Game) => {
 
 </script>
 <style scoped>
+ @import url('../../style.css');
 </style>
