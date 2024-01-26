@@ -1,0 +1,39 @@
+type User {
+  id: Int
+  name: String
+}
+
+type Game {
+  id: Int
+  name: String
+  category: String
+  numberOfPlayers: Int
+  time: String
+}
+
+type Date {
+  id: Int
+  date: String
+}
+
+input CreateGameInput {
+  name: String!
+  category: String!
+  numberOfPlayers: Int!
+  time: String!
+}
+
+input CreateUserInput {
+  name: String!
+}
+
+type Query {
+  users: [User]
+  games: [Game]
+}
+
+type Mutation {
+  saveDateToPostgres(date: String): Date
+  createGame(input: CreateGameInput!): Game
+  createUser(input: CreateUserInput!): User
+}

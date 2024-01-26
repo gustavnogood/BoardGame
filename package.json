@@ -6,23 +6,48 @@
   "main": "server/index.js",
   "scripts": {
     "dev:frontend": "vite",
-    "dev:backend": "nodemon server/index.js",
+    "dev:backend": "nodemon --watch server --ext js,json --exec node server/index.js",
     "dev": "concurrently 'npm:dev:frontend' 'npm:dev:backend'",
     "start": "set NODE_ENV=production && node server/index.js",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:deploy": "npx prisma migrate deploy"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.8",
+    "@graphql-tools/schema": "^10.0.2",
+    "@popperjs/core": "^2.11.8",
+    "@prisma/client": "^5.7.1",
+    "@vue/apollo-composable": "^4.0.0-beta.12",
+    "apollo-server-express": "^3.13.0",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "vue": "^3.3.8"
+    "firebase": "^10.7.1",
+    "firestore": "^1.1.6",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
+    "leaflet-geosearch": "^3.11.0",
+    "v-calendar": "^3.1.2",
+    "vue": "^3.3.10",
+    "vue-apollo": "^3.1.1",
+    "vue-mapbox-gl": "^0.0.1",
+    "vue-router": "^4.2.5",
+    "vue2-leaflet-geosearch": "^1.0.6",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.8",
+    "@types/vue-router": "^2.0.0",
     "@vitejs/plugin-vue": "^4.5.0",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
     "concurrently": "^8.2.2",
+    "leaflet": "^1.9.4",
     "nodemon": "^3.0.1",
+    "prisma": "^5.7.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
+    "vue-browser-geolocation": "^1.8.0",
     "vue-tsc": "^1.8.22"
   }
 }
